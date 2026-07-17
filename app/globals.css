@@ -4,60 +4,62 @@
 
 @layer base {
   :root {
-    /* Neutral, minimalist palette — lets product photography be the colour. */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    /* Warm, paper-like neutrals — editorial and calm, lets denim photography
+       carry the colour. */
+    --background: 40 30% 98%;
+    --foreground: 24 12% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 24 12% 10%;
 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 24 12% 10%;
+    --primary-foreground: 40 30% 98%;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 34 18% 94%;
+    --secondary-foreground: 24 12% 12%;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 34 16% 95%;
+    --muted-foreground: 25 8% 42%;
 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    /* Warm tan brand accent for subtle highlights. */
+    --accent: 28 45% 90%;
+    --accent-foreground: 24 30% 18%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --border: 30 14% 88%;
+    --input: 30 14% 88%;
+    --ring: 24 12% 10%;
 
-    --radius: 0.65rem;
+    --radius: 0.9rem;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 24 12% 6%;
+    --foreground: 40 24% 96%;
 
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 24 11% 9%;
+    --card-foreground: 40 24% 96%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 40 24% 96%;
+    --primary-foreground: 24 12% 8%;
 
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 24 8% 15%;
+    --secondary-foreground: 40 24% 96%;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 24 8% 14%;
+    --muted-foreground: 30 10% 62%;
 
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 26 20% 20%;
+    --accent-foreground: 34 40% 88%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62% 45%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 24 8% 18%;
+    --input: 24 8% 18%;
+    --ring: 34 30% 80%;
   }
 }
 
@@ -65,8 +67,77 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground antialiased;
     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    @apply bg-foreground text-background;
+  }
+}
+
+@layer components {
+  /* Section eyebrow label. */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground;
+  }
+
+  /* Frosted panel used for floating cards / nav. */
+  .glass {
+    @apply bg-background/70 backdrop-blur-xl backdrop-saturate-150;
+  }
+}
+
+@layer utilities {
+  /* Gradient text for headline accents. */
+  .text-gradient {
+    @apply bg-gradient-to-br from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent;
+  }
+
+  /* Subtle film-grain overlay for depth. */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  /* Reveal-on-scroll: hidden until the .is-visible class is added by JS. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .pause-on-hover:hover [data-marquee] {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+  [data-marquee] {
+    animation: none !important;
   }
 }

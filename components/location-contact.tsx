@@ -4,6 +4,7 @@ import { siteConfig, whatsappUrl } from "@/lib/site-config";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Reveal } from "@/components/reveal";
 import { WhatsAppIcon } from "@/components/icons";
 
 const mapEmbedSrc =
@@ -13,27 +14,25 @@ export function LocationContact() {
   const { address, contact, hours } = siteConfig;
 
   return (
-    <section id="location" className="py-16 md:py-24">
+    <section id="location" className="border-t py-16 md:py-24">
       <div className="container">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Visit &amp; Order
-          </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <p className="eyebrow">Visit &amp; Order</p>
+          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">
             Find us in the heart of Strathfield
           </h2>
-        </div>
+        </Reveal>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           {/* Details */}
-          <div className="flex flex-col gap-6">
-            <Card>
+          <Reveal className="flex flex-col gap-5">
+            <Card className="rounded-2xl">
               <CardContent className="flex items-start gap-4 p-6">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-secondary">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">Our Store</h3>
+                  <h3 className="font-display font-semibold">Our Store</h3>
                   <p className="mt-1 text-muted-foreground">
                     {address.line1}
                     <br />
@@ -57,14 +56,16 @@ export function LocationContact() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="rounded-2xl">
               <CardContent className="flex items-start gap-4 p-6">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-emerald-500/15">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-500/15">
                   <Clock className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-semibold">Opening Hours</h3>
+                    <h3 className="font-display font-semibold">
+                      Opening Hours
+                    </h3>
                     <Badge variant="success">{hours.label}</Badge>
                   </div>
                   <p className="mt-1 text-muted-foreground">{hours.detail}</p>
@@ -72,14 +73,14 @@ export function LocationContact() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="rounded-2xl">
               <CardContent className="flex flex-col gap-4 p-6">
                 <div className="flex items-start gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-secondary">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary">
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Get in touch</h3>
+                    <h3 className="font-display font-semibold">Get in touch</h3>
                     <p className="mt-1 text-muted-foreground">
                       {contact.phoneDisplay}
                     </p>
@@ -89,7 +90,12 @@ export function LocationContact() {
                     </p>
                   </div>
                 </div>
-                <Button asChild variant="whatsapp" size="lg" className="w-full">
+                <Button
+                  asChild
+                  variant="whatsapp"
+                  size="lg"
+                  className="w-full rounded-full"
+                >
                   <a
                     href={whatsappUrl()}
                     target="_blank"
@@ -101,20 +107,23 @@ export function LocationContact() {
                 </Button>
               </CardContent>
             </Card>
-          </div>
+          </Reveal>
 
           {/* Map */}
-          <div className="min-h-[320px] overflow-hidden rounded-2xl border shadow-sm lg:min-h-full">
+          <Reveal
+            delay={120}
+            className="min-h-[340px] overflow-hidden rounded-2xl border shadow-sm lg:min-h-full"
+          >
             <iframe
               title={`Map showing ${siteConfig.name} in Strathfield`}
               src={mapEmbedSrc}
-              className="h-full min-h-[320px] w-full"
+              className="h-full min-h-[340px] w-full"
               style={{ border: 0 }}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
             />
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

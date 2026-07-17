@@ -1,8 +1,12 @@
 import { SiteHeader } from "@/components/site-header";
 import { HeroSection } from "@/components/hero-section";
+import { Marquee } from "@/components/marquee";
+import { WhyUs } from "@/components/why-us";
 import { FeaturesGrid } from "@/components/features-grid";
+import { CtaBanner } from "@/components/cta-banner";
 import { LocationContact } from "@/components/location-contact";
 import { SiteFooter } from "@/components/site-footer";
+import { FloatingWhatsApp } from "@/components/floating-whatsapp";
 import { siteConfig } from "@/lib/site-config";
 
 /**
@@ -56,10 +60,14 @@ export default function HomePage() {
       <SiteHeader />
       <main>
         <HeroSection />
+        <Marquee />
+        <WhyUs />
         <FeaturesGrid />
+        <CtaBanner />
         <LocationContact />
       </main>
       <SiteFooter />
+      <FloatingWhatsApp />
     </>
   );
 }
