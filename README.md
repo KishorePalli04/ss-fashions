@@ -92,7 +92,31 @@ All business-specific content lives in [`lib/site-config.ts`](lib/site-config.ts
   URLs with the client's own photos and update `next.config.mjs` `remotePatterns`
   accordingly (or drop images into `/public`).
 
-## Deploy on Vercel
+## Deploy on GitHub Pages (free hosting)
+
+This repo ships a workflow (`.github/workflows/deploy.yml`) that builds a static
+export and publishes it to GitHub Pages automatically on every push to `main`.
+
+**One-time setup:** in the repo, go to **Settings → Pages → Build and
+deployment**, and set **Source** to **GitHub Actions**. That's it — the next
+push to `main` (or a manual run from the Actions tab) deploys the site.
+
+The site will be served at:
+
+```
+https://<your-username>.github.io/ss-fashions/
+```
+
+How it works:
+
+- `next.config.mjs` uses `output: "export"` to emit a static `./out` folder.
+- When the workflow sets `GITHUB_PAGES=true`, it also sets `PAGES_BASE_PATH` to
+  `/<repo-name>` so asset and link URLs resolve under the project subpath.
+  Local `npm run dev` and Vercel builds leave these unset and serve from `/`.
+- `next/image` runs with `unoptimized: true` (Pages has no image server), and a
+  `public/.nojekyll` file stops Pages from hiding the `_next` assets folder.
+
+## Deploy on Vercel (alternative)
 
 1. Push this repo to GitHub.
 2. Import the project at [vercel.com/new](https://vercel.com/new).
